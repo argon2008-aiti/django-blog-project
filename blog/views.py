@@ -12,7 +12,12 @@ def post_list(request):
     post_list = Post.objects.all()
     print type(post_list)
     print post_list
-    return HttpResponse(post_list)
+    response = HttpResponse()
+    response.write('<h2>POSTS</h2>')
+    for post in post_list:
+        response.write(post)
+        response.write('</p>')
+    return response
 
 def post_detail(request, id, showComments):
     post_matched = Post.objects.get(id=id)
