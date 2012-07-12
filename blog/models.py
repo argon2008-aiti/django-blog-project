@@ -3,11 +3,21 @@ from django.contrib import admin
 
 # Create your models here.
 
+
+class Blog():
+    def get_absolute_url():
+        return "/blog/posts"
+
 class Post(models.Model):
     title = models.CharField(max_length=60)
     body = models.TextField()
     created  = models.DateField()
     updated = models.DateField()
+    
+    def get_absolute_url(self):
+        return "/blog/posts/%i/true" % self.id
+
+
     def __unicode__(self):
         return self.title
 

@@ -4,48 +4,28 @@ This code should be copied and pasted into your blog/views.py file before you be
 
 from django.template import Context, loader, Template
 from django.http import HttpResponse
-
-from models import Post, Comment
+from django.shortcuts import render_to_response
+from models import Post, Comment, Blog
 
 
 def post_list(request):
-    post_list = Post.objects.all()
-    print type(post_list)
-    print post_list
-    response = HttpResponse()
-    response.write('<h2>POSTS</h2>')
-    for post in post_list:
-        response.write(post)
-        response.write('</p>')
-    return response
-
+    posts = Post.objects.all()
+    t = loader.get_template('blog/post_list.html')
+    c = Context({'posts':posts })
+    return HttpResponse(t.render(c))
+    
 def post_detail(request, id, showComments):
-    post_matched = Post.objects.get(id=id)
-    post_details = post_matched.body
-    post_comment = Comment.objects.get(post=id)
-    response = HttpResponse() 
-    post_html = Template('<h2>{{post_matched}}</h2>')
-    c_1 = Context({'post_matched':post_matched})
-    response.write(post_html.render(c_1))    
-    response.write(post_details)
+    post = Post.objects.get(id=id)
+    comments = Comment.objects.filter(post=id) 
+    t = loader.get_template('blog/post_detail.html')
+    c = Context({'post':post, 'comments':comments})
+    return HttpResponse(t.render(c))
 
-    if showComments=='true':    
-        response.write('<h3>Comments</h3>')
-        response.write(post_comment)
-        return response
-    return response
-
-def post_search(request, anything):
-    search_result = Post.objects.filter(body__contains=anything)
-    t = Template('<h3>All posts containing "{{anything}}"</h3>')
-    c = Context({'anything':anything})
-    response = HttpResponse()
-    response.write(t.render(c))
-    for post in search_result:
-        response.write(post.body)
-        response.write('</p>')
-    return response
-
+def post_search( request, term ):
+    posts = Post.objects.filter(title__contains = term)
+    return render_to_response('blog/post_search.html',{'posts':posts, 'term':term})
+    
 def home(request):
-    print 'it works'
-    return HttpResponse('hello world. Ete zene?') 
+   blog = Blog() 
+   return render_to_response('blog/base.html',{'blog':blog}) 
+
