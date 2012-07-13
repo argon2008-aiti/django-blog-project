@@ -3,6 +3,8 @@ from django.contrib import admin
 
 # Create your models here.
 
+
+
 class Post(models.Model):
     title = models.CharField(max_length=60)
     body = models.TextField()
@@ -22,10 +24,8 @@ class Comment(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now_add=True)
     post = models.ForeignKey(Post)
-
     def get_absolute_url(self):
-        return "/blog/posts/%i/true" %self.post.id
-        
+        return self.post.get_absolute_url()      
     def __unicode__(self):
         return self.body
 
