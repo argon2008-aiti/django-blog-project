@@ -10,6 +10,6 @@ urlpatterns = patterns('',
     url(r'^posts/$', 'blog.views.post_list'),
     url(r'^posts/(?P<id>\d+)/((?P<showComments>\w*)/)?$', 'blog.views.post_detail'),
     url(r'^posts/search/((?P<term>.*)/)?$', 'blog.views.post_search'),
-    
+    url(r'^comments/(?P<id>\d+)/edit$','blog.views.edit_comment'),
     ## add your url here
 )

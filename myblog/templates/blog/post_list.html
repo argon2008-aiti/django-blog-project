@@ -11,7 +11,7 @@
         <ul>
            <li>date created: {{ post.created }}</li>
            <li>date updated: {{ post.updated }}</li>
-           <li>{{ post.body }}... </li>
+           <li>{{ post.body|truncatewords:"60" }}... </li>
         </ul>
     {% endfor %}  
       

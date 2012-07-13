@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h3>{{ comment.post.title }}</h3>
+<br />
+
+<h4>Edit Comment</h4>
+<div>
+    <form method = "post" action= "">
+        {{ form.as_p }}
+        <input type= 'submit' name = 'Update'>
+    </form>
+</div>
+{% endblock %}     

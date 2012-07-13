@@ -3,17 +3,12 @@ from django.contrib import admin
 
 # Create your models here.
 
-
-class Blog():
-    def get_absolute_url():
-        return "/blog/posts"
-
 class Post(models.Model):
     title = models.CharField(max_length=60)
     body = models.TextField()
-    created  = models.DateField()
-    updated = models.DateField()
-    
+    updated = models.DateField(auto_now_add=True)
+    created = models.DateField(auto_now_add=True)
+     
     def get_absolute_url(self):
         return "/blog/posts/%i/true" % self.id
 
@@ -24,9 +19,13 @@ class Post(models.Model):
 class Comment(models.Model):
     body = models.TextField()
     author = models.CharField(max_length=60)
-    created = models.DateField()
-    updated = models.DateField()
-    post = models.ForeignKey(Post)        
+    created = models.DateField(auto_now_add=True)
+    updated = models.DateField(auto_now_add=True)
+    post = models.ForeignKey(Post)
+
+    def get_absolute_url(self):
+        return "/blog/posts/%i/true" %self.post.id
+        
     def __unicode__(self):
         return self.body
 
