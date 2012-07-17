@@ -1,13 +1,28 @@
-<head><link rel = "stylesheet" href = "/static/bootstrap/css/bootstrap.css"/>
-     <title>ARGON'S BLOG</title>
-     <h1><center>WELCOME TO ARGON'S BLOG</center></h1> 
-<body>
-     <a href="/blog/posts/">Click to show blogs >>></a>
-     <div id = "content" style=" border: 2px solid blue;marginLeft: 10px">
+
+<!DOCTYPE html>
+<html style="height:100%;">
+
+<head style=><link rel = "stylesheet" href = "/static/bootstrap/css/bootstrap.css"/>
+     <title>BLOG EUREKA</title>
+</head>
+<body style="margin:0px;padding:0px;height:100%;">
+    <div id='wrapper' style="min-height:100%;position:relative;background-image:url('/static/backgrounds/body-background2.jpg');">   
+    <div id='header' style="text-align:center;color:#a4191b;font-weight:bold;width:100%;height:70px;background-image:url('/static/backgrounds/steel_mesh.png');">
+   <h1 style="padding-top:20px;"> BLOG EUREKA</h1> 
+    </div>
+     
+  <a href="/blog/posts/"><b> HOME | </b> </a>
+  <a href="/reg/login"><b> LOGIN</b></a>
+  
+     <div id = "content" style = "margin-left:auto;margin-right:auto;margin-top:60px; width:60%;padding:20px;padding-bottom:100px;background-color:white;" >
          {% block content %}
 
          {% endblock %}
      </div>	
-</body>
-</head>
-          
+
+     
+<div id='footer' style="width:100%;height:50px;background-image:url('/static/backgrounds/steel_mesh.png');;position:absolute;left:0;bottom:0;text-align:center;color:white;font-weight:bold;"><h3>site design headerⒸ2012  eureka blog <h3></div>
+</div>
+
+</body> 
+</html>          

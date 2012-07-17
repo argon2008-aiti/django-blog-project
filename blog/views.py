@@ -6,7 +6,7 @@ from django.template import Context, loader, Template
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from models import Post, Comment
-from django.forms import ModelForm
+from django import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 import datetime
@@ -17,15 +17,20 @@ def post_list(request):
     c = Context({'posts':posts })
     return HttpResponse(t.render(c))
 
-class CommentForm(ModelForm):
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(label='comment',widget=forms.Textarea(attrs={'rows': 5,'style':'width:75%','text':'type comment here'}))
     class Meta:
         model = Comment
-        exclude = ['post']
+        fields = ('body',)
+        
+                    
+        
+        
 @csrf_exempt    
-def post_detail(request, id, showComments):
+def post_detail(request, id ):
     post = Post.objects.get(id=id)
     if request.method == 'POST':
-        comment = Comment(post=post)
+        comment = Comment(post=post, author=request.user.username)
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
@@ -34,7 +39,7 @@ def post_detail(request, id, showComments):
         form = CommentForm()
     comments = Comment.objects.filter(post=id) 
     t = loader.get_template('blog/post_detail.html')
-    c = Context({'post':post, 'comments':comments, 'form':form})
+    c = Context({'post':post, 'comments':comments, 'form':form, 'user':request.user})
     return HttpResponse(t.render(c))
 
 def post_search( request, term ):

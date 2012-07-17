@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib import admin
-
 # Create your models here.
 
 
@@ -12,7 +11,7 @@ class Post(models.Model):
     created = models.DateField(auto_now_add=True)
      
     def get_absolute_url(self):
-        return "/blog/posts/%i/true" % self.id
+        return "/blog/posts/%i" % self.id
 
 
     def __unicode__(self):
@@ -21,7 +20,7 @@ class Post(models.Model):
 class Comment(models.Model):
     body = models.TextField()
     author = models.CharField(max_length=60)
-    created = models.DateField(auto_now_add=True)
+    created = models.DateField(auto_now=True)
     updated = models.DateField(auto_now_add=True)
     post = models.ForeignKey(Post)
     def get_absolute_url(self):

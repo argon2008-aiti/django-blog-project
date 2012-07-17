@@ -3,39 +3,46 @@
 
 {% block content %}
 
-<b><h3>{{ post.title }}</h3></b>
+<b><h3>{{ post.title|upper }}</h3></b>
 
-   <body>
-        {{ post.body }}
+   <div style= "text-align:justify;">
+          {{ post.body|linebreaks }}
        <br />
        <li>created {{ post.created }}</li>
        <li>last updated {{ post.updated }}</li> 
-.......................................................................................................................................................................
+       <hr />
        <br />
        <b><h3>Comments</h3></b>
        {% for comment in comments %}
         
            <li>By: <i>{{ comment.author }}</i></li>
-           <body>
+          
              {{ comment.body }}
-           </body>
+          
            <li>created {{ comment.created }}</li>
            <li>last update {{ comment.updated }}</li>
            <div>
+          
+          {% if user.is_authenticated %}
+               {% ifequal user.username comment.author %} 
+            
               <a href="/blog/comments/{{ comment.id }}/edit">
                   Edit Comment
               </a>
-           </div>
-.......................................................................................................................................................................
+           
+         
+               {% endifequal %}
+           {% endif %}
+           <hr />
        {% endfor %}
-    </body>
-<h3>New comment:</h3>
-<div>
-    <form method= 'post' action="">
-        {{ form.as_p }}
-        <input type='submit' name='Submit'>
-    </form>
-</div>  
    
+{% if user.is_authenticated %} 
+    <h3>Add comment:</h3>
+   
+        <form method= 'post' action="">
+            {{ form.as_p }}
+            <input type='submit' value='Submit'>
+        </form>  
+{% endif %}   
 
 {% endblock %}

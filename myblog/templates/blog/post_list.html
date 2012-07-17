@@ -1,20 +1,17 @@
 {% extends "blog/base.html" %}
 
-{% block content %}
+{% block title %}Post List{% endblock %}
 
+{% block content %}
+    <h2>POSTS</h2>
     {% for post in posts %}
-        <h5>
-           <a href = "{{ post.get_absolute_url }}">{{ post.title }}
-           </a>
-        <h5>
-        
-        <ul>
+       <hr />
+           <a href = "{{ post.get_absolute_url }}">{{ post.title }}  </a>
            <li>date created: {{ post.created }}</li>
            <li>date updated: {{ post.updated }}</li>
            <li>{{ post.body|truncatewords:"60" }}... </li>
-        </ul>
-    {% endfor %}  
-      
+           
+      {% endfor %}     
 {% endblock %}
 
 
