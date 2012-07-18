@@ -20,7 +20,7 @@ def do_login(request):
     user = authenticate(username=username, password=password)
     if user is not None and user.is_active:
         login( request, user )
-          
+        return HttpResponseRedirect("/blog/") 
     form = LoginForm()
     return render_to_response('reg/login.html', {
         'form': form,

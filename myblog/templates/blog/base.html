@@ -10,18 +10,24 @@
     <div id='header' style="text-align:center;color:#a4191b;font-weight:bold;width:100%;height:70px;background-image:url('/static/backgrounds/steel_mesh.png');">
    <h1 style="padding-top:20px;"> BLOG EUREKA</h1> 
     </div>
-     
-  <a href="/blog/posts/"><b> HOME | </b> </a>
-  <a href="/reg/login"><b> LOGIN</b></a>
+
+  {% if not logged_in %} 
+      <a href="/reg/login" style="position:absolute;right:10px;font-weight:bold;">LOGIN</a>
+  {% else %}
+      <div style="position:absolute;right:100px;color:#f1f1e8;">logged in as {{user.username}}</div><a href="/reg/logout" style="float:right;font-weight:bold;padding-right:10px;">LOGOUT</a>
+  {% endif %}   
+  <a href="/blog/" style="padding-left:10px;"><b> HOME | </b> </a>
+  <a href="/blog/posts/"><b> BLOG  | </b></a>
+  <a href="/blog/about"><b>ABOUT | </b></a> 
   
      <div id = "content" style = "margin-left:auto;margin-right:auto;margin-top:60px; width:60%;padding:20px;padding-bottom:100px;background-color:white;" >
          {% block content %}
-
+       <div style="text-align:center;color:#a4191b;font-weight:bold"><h3> WELCOME TO EUREKA </h3></div>
          {% endblock %}
      </div>	
 
      
-<div id='footer' style="width:100%;height:50px;background-image:url('/static/backgrounds/steel_mesh.png');;position:absolute;left:0;bottom:0;text-align:center;color:white;font-weight:bold;"><h3>site design headerⒸ2012  eureka blog <h3></div>
+<div id='footer' style="width:100%;height:50px;background-image:url('/static/backgrounds/steel_mesh.png');position:absolute;left:0;bottom:0;text-align:center;color:#f1f1e8;font-weight:bold;"><h3 style="padding-top:14px;">site design headerⒸ2012  eureka blog <h3></div>
 </div>
 
 </body> 

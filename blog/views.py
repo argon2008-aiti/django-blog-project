@@ -14,7 +14,7 @@ import datetime
 def post_list(request):
     posts = Post.objects.all()
     t = loader.get_template('blog/post_list.html')
-    c = Context({'posts':posts })
+    c = Context({'posts':posts,'user':request.user,'logged_in':request.user.is_authenticated() })
     return HttpResponse(t.render(c))
 
 class CommentForm(forms.ModelForm):
@@ -22,9 +22,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('body',)
-        
-                    
-        
         
 @csrf_exempt    
 def post_detail(request, id ):
@@ -39,15 +36,15 @@ def post_detail(request, id ):
         form = CommentForm()
     comments = Comment.objects.filter(post=id) 
     t = loader.get_template('blog/post_detail.html')
-    c = Context({'post':post, 'comments':comments, 'form':form, 'user':request.user})
+    c = Context({'post':post, 'comments':comments, 'form':form,'logged_in':request.user.is_authenticated(), 'user':request.user})
     return HttpResponse(t.render(c))
 
 def post_search( request, term ):
     posts = Post.objects.filter(title__contains = term)
-    return render_to_response('blog/post_search.html',{'posts':posts, 'term':term})
+    return render_to_response('blog/post_search.html',{'posts':posts, 'term':term,'user':request.user,'logged_in':request.user.is_authenticated()})
     
 def home(request): 
-   return render_to_response('blog/base.html',{}) 
+   return render_to_response('blog/base.html',{'logged_in':request.user.is_authenticated(),'user':request.user}) 
 
 @csrf_exempt
 def edit_comment( request,id ):
@@ -62,5 +59,5 @@ def edit_comment( request,id ):
         return HttpResponseRedirect( comment.get_absolute_url() )
     else:
         form = CommentForm( instance = comment )
-    return render_to_response('blog/edit_comment.html', {'comment':comment,'form':form } )
+    return render_to_response('blog/edit_comment.html', {'comment':comment,'form':form,'user':request.user,'logged_in':request.user.is_authenticated() } )
 
